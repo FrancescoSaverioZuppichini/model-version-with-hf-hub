@@ -93,7 +93,7 @@ class ModelVersioningHandler:
         with self.repo_path.params.open("w") as f:
             json.dump(global_params, f)
         # create a README.md with a list of all the model's versions
-        self.add_reference_model_card(global_params)
+        self.add_model_card(global_params)
         repo.push_to_hub("Updated params.json")
 
     def save_model(self, model: nn.Module):
@@ -117,7 +117,7 @@ class ModelVersioningHandler:
         if has_params_changed:
             logger.info("Parameters have beend changed.")
             self.maybe_switch_branch(params, self.repo)
-            self.add_model_card(params, self.repo)
+            self.add_params(params)
             self.repo.push_to_hub("Added parameters.")
 
         self.save_model(model)
